@@ -16,12 +16,18 @@ import store from '../store/index';
 
 export default {
   data() {
-    return { destinationId: this.$route.params.id };
+    return {};
+  },
+  props: {
+    slug: {
+      type: String,
+      require: true,
+    },
   },
   computed: {
     destination() {
       return store.destinations.find(
-        (destination) => destination.id.toString() === this.destinationId
+        (destination) => destination.slug === this.slug
       );
     },
   },
