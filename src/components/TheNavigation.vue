@@ -1,35 +1,71 @@
 <template>
   <nav id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-    <router-link to="/brazil">Brazil</router-link>
-    <router-link to="/panama">Panama</router-link>
-    <router-link to="/hawaii">Hawaii</router-link>
-    <router-link to="/jamaica">Jamaica</router-link>
+    <p class="logo">Vue Travel</p>
+    <ul class="nav-links">
+      <li class="links">
+        <router-link to="/"> Home</router-link>
+      </li>
+      <li
+        v-for="destination in destinations"
+        :key="destination.id"
+        class="links"
+      >
+        <router-link
+          :to="{ name: 'DestinationDetails', params: { id: destination.id } }"
+        >
+          {{ destination.name }}
+        </router-link>
+      </li>
+    </ul>
   </nav>
 </template>
 
 <script>
+import store from '../store/index.js';
+
 export default {
   name: 'TheNavigation',
-  props: {
-    msg: String,
+  data() {
+    return {
+      destinationId: this.$route.params.id,
+      destinations: store.destinations,
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
 #nav {
-  padding: 30px;
-
   a {
     font-weight: bold;
     color: #2c3e50;
-    padding: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
 
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+
+  .nav-links {
+    display: flex;
+  }
+
+  .links {
+    padding-right: 20px;
+    list-style: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: green;
+    text-align: left;
+    margin: 0 40px;
   }
 }
 </style>
